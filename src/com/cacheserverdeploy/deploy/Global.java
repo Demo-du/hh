@@ -1,5 +1,7 @@
 package com.cacheserverdeploy.deploy;
 
+import java.util.Queue;
+
 public class Global {
       public static String ceshi ="";
 	  public static int k;//能耗系数k
@@ -12,5 +14,7 @@ public class Global {
 	  public static int m;//质量
 	  public static int time_wait;//最大等待时间
 	  public static String[][] ditu;//地图
+	  public static int [][] graph;//无向图.列：i×列数+j
 	  public static int [][]info_car;//车辆信息
+	  public static Queue<Integer> [][]lujing;
 }

@@ -19,6 +19,7 @@ public class Init {
     	Global.h=Integer.valueOf(num2[1]);
     	//图初始化
     	Global.ditu=new String [Global.w][Global.h];
+    	int width=Global.w;
     	int heigtht=Global.h;
     	for(int i=0;i<heigtht;i++){
     		Global.ditu[i]=graphContent[i+2].split(" ");
@@ -37,13 +38,79 @@ public class Init {
     			Global.info_car[i][j]=Integer.valueOf(info[i][j]);
     		}
     	}
+    	//无向图初始化
+    	Global.graph=new int [Global.w*Global.h][Global.w*Global.h];//定义无向图大小
+    	int MAX=Integer.MAX_VALUE;//最大值
+    	int lenth_graph=Global.w*Global.h;
+    	for(int i=0;i<lenth_graph;i++){//赋初值
+    		for(int j=0;j<lenth_graph;j++){
+    			Global.graph[i][j]=MAX;
+    		}
+    	}
+    	for(int i=0;i<width;i++){//横向扫描
+    		for(int j=0;j<heigtht-1;j++){
+    			if(Global.ditu[i][j].equals("X")&&Global.ditu[i][j+1].equals("X")){//连续两个X
+    				Global.graph[i*heigtht+j][i*heigtht+j+1]=1;
+    				Global.graph[i*heigtht+j+1][i*heigtht+j]=1;
+    			}else if(Global.ditu[i][j].equals("X")&&Global.ditu[i][j+1].equals("P")){
+    				Global.graph[i*heigtht+j][i*heigtht+j+1]=1;
+    				Global.graph[i*heigtht+j+1][i*heigtht+j]=1;
+    			}else if(Global.ditu[i][j].equals("P")&&Global.ditu[i][j+1].equals("X")){
+    				Global.graph[i*heigtht+j][i*heigtht+j+1]=1;
+    				Global.graph[i*heigtht+j+1][i*heigtht+j]=1;
+    			}else if((Global.ditu[i][j].equals("I")||Global.ditu[i][j].equals("E"))){
+    				if(j>0&&(!Global.ditu[i][j-1].equals("B"))){
+    					Global.graph[i*heigtht+j][i*heigtht+j-1]=1;
+    					Global.graph[i*heigtht+j-1][i*heigtht+j]=1;
+    				}
+    				if(!Global.ditu[i][j+1].equals("B")){
+    					Global.graph[i*heigtht+j][i*heigtht+j+1]=1;
+        				Global.graph[i*heigtht+j+1][i*heigtht+j]=1;
+    				}
+    			}
+    		}
+    	}
+    	for(int i=0;i<width;i++){//横向扫描最后一列
+    		if((Global.ditu[i][heigtht-1].equals("I")||Global.ditu[i][heigtht-1].equals("E"))){
+    			if((!Global.ditu[i][heigtht-1-1].equals("B"))){
+					Global.graph[i*heigtht+heigtht-1][i*heigtht+heigtht-1-1]=1;
+					Global.graph[i*heigtht+heigtht-1-1][i*heigtht+heigtht-1]=1;
+				}
+    		}
+    	}
+    	for(int j=0;j<heigtht;j++){//纵向扫描
+    		for(int i=0;i<width-1;i++){
+    			if(Global.ditu[i][j].equals("X")&&Global.ditu[i+1][j].equals("X")){//连续两个X
+    				Global.graph[i*heigtht+j][i*heigtht+j+heigtht]=1;
+    				Global.graph[i*heigtht+heigtht+1][i*heigtht+j]=1;
+    			}else if(Global.ditu[i][j].equals("X")&&Global.ditu[i+1][j].equals("P")){
+    				Global.graph[i*heigtht+j][i*heigtht+j+heigtht]=1;
+    				Global.graph[i*heigtht+j+heigtht][i*heigtht+j]=1;
+    			}else if(Global.ditu[i][j].equals("P")&&Global.ditu[i+1][j].equals("X")){
+    				Global.graph[i*heigtht+j][i*heigtht+j+heigtht]=1;
+    				Global.graph[i*heigtht+j+heigtht][i*heigtht+j]=1;
+    			}else if((Global.ditu[i][j].equals("I")||Global.ditu[i][j].equals("E"))){
+    				if(i>0&&(!Global.ditu[i][j-1].equals("B"))){
+    					Global.graph[i*heigtht+j][i*heigtht+j-heigtht]=1;
+    					Global.graph[i*heigtht+j-heigtht][i*heigtht+j]=1;
+    				}
+    				if(!Global.ditu[i+1][j].equals("B")){
+    					Global.graph[i*heigtht+j][i*heigtht+j+heigtht]=1;
+        				Global.graph[i*heigtht+j+heigtht][i*heigtht+j]=1;
+    				}
+    			}
+    		}
+    	}
+    	for(int j=0;j<heigtht;j++){//纵向扫描最后一行
+    		if((Global.ditu[width-1][j].equals("I")||Global.ditu[width-1][j].equals("E"))){
+    			if((!Global.ditu[width-1-1][j].equals("B"))){
+					Global.graph[(width-1-1)*heigtht+j][(width-1-1)*heigtht+j+heigtht]=1;
+					Global.graph[(width-1-1)*heigtht+j+heigtht][(width-1-1)*heigtht+j]=1;
+				}
+    		}
+    	}
     }
+
+
     
-    /*
-     * 检查图是否有效
-     */
-    public static String map_check(){
-    	
-    	return "YES";
-    }
 }

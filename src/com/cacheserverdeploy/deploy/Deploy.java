@@ -14,7 +14,7 @@ public class Deploy
     {
         /**do your work here**/
     	Init.data_init(graphContent);
-    	System.out.println(Global.info_car[3][0]);
+    	System.out.println(code.bianma(1,4));
         return new String[]{"17","\r\n","0 8 0 20"};
     }
     
