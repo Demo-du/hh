@@ -1,7 +1,6 @@
 package com.cacheserverdeploy.deploy;
 
 import java.util.Arrays;
-import java.util.Queue;
 
 public class Init {
 	/*
@@ -12,7 +11,7 @@ public class Init {
     	String [] num2=new String [2];
     	//第一行初始化
     	num1=graphContent[0].split(" ");
-    	Global.k=Integer.valueOf(num1[0]);
+    	Global.k=Integer.valueOf(num1[0]); 
     	Global.p=Integer.valueOf(num1[1]);
     	Global.a=Integer.valueOf(num1[2]);
     	Global.b=Integer.valueOf(num1[3]);
@@ -30,6 +29,8 @@ public class Init {
     	//第四部分初始化
     	Global.num_car=Integer.valueOf(graphContent[2+width]);
     	//车相关信息初始化
+    	Global.car_p=new int [Global.num_car];
+    	Global.car_sesult=new int [Global.num_car][7];//车的结果
     	Global.info_car=new int [Global.num_car][5];
     	String [][]info=new String [Global.num_car][5];
     	int numcar=Global.num_car;
@@ -75,9 +76,11 @@ public class Init {
     				}
     				if(Global.ditu[i][j].equals("I")){
     					Global.I=code.bianma(i, j);
+    					Global.I_num++;
     				}
     				if(Global.ditu[i][j].equals("E")){
     					Global.E=code.bianma(i, j);
+    					Global.E_num++;
     				}
     			}
     		}
@@ -94,9 +97,11 @@ public class Init {
 			}
     		if(Global.ditu[i][heigtht-1].equals("I")){
 				Global.I=code.bianma(i, heigtht-1);
+				Global.I_num++;
 			}
 			if(Global.ditu[i][heigtht-1].equals("E")){
 				Global.E=code.bianma(i, heigtht-1);
+				Global.E_num++;
 			}
     	}
     	for(int j=0;j<heigtht;j++){//纵向扫描
@@ -139,7 +144,24 @@ public class Init {
     		}
     	}
     	Global.Dist=Arrays.copyOf(Floyd.floyd(Global.graph, Global.w*Global.h),Global.w*Global.h);
-    	
+    	//车位排序
+    	int num_p=Global.park.size();
+    	Global.park_paixu=new int [num_p];
+    	int xx=0;
+    	for(int a:Global.park){
+    		Global.park_paixu[xx]=a;
+    		xx++;
+    	}
+    	int temp=0;
+    	for(int i=0;i<num_p-1;i++){
+    		for(int j=0;j<num_p-1;j++){
+    			if(Global.Dist[Global.I][Global.park_paixu[j]]>Global.Dist[Global.I][Global.park_paixu[j+1]]){  
+    	            temp=Global.park_paixu[j];  
+    	            Global.park_paixu[j]=Global.park_paixu[j+1];  
+    	            Global.park_paixu[j+1]=temp;  
+    	        } 
+    		}
+    	}
     }
 
 

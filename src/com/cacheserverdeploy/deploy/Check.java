@@ -5,7 +5,7 @@ public class Check {
      * 检查图是否有效
      */
     public static String map_check(){
-    	if(is_arrive()){
+    	if(is_arrive()&&is_2()){
     		Global.map_flag=true;
     		return "YES";
     	}
@@ -25,7 +25,12 @@ public class Check {
     	return flag;
     }
     public static boolean is_2(){
-    	return true;
+    	if(Global.I_num==1&&Global.E_num==1){
+    		return true;
+    	}
+    	else{
+    		return false;
+    	}
     }
     public static boolean is_3(){
     	return true;
