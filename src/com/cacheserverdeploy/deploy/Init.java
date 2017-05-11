@@ -31,6 +31,10 @@ public class Init {
     	//车相关信息初始化
     	Global.car_p=new int [Global.num_car];
     	Global.car_sesult=new int [Global.num_car][7];//车的结果
+    	Global.result=new String [Global.num_car];
+    	for(int i=0;i<Global.num_car;i++){
+    		Global.result[i]="";
+    	}
     	Global.info_car=new int [Global.num_car][5];
     	String [][]info=new String [Global.num_car][5];
     	int numcar=Global.num_car;

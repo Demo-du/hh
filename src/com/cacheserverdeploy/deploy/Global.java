@@ -34,4 +34,5 @@ public class Global {
 	  public static int[] park_paixu;
 	  public static int time=0;//时间
 	  public static int [][] car_sesult;
+	  public static String [] result;
 }
