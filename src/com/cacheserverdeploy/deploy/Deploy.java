@@ -32,6 +32,7 @@ public class Deploy
         /**do your work here**/
     	Init.data_init(graphContent);//初始化
     	String checkmap=Check.map_check();//判断地图是否有效
+    	String result="";//
     	if(Global.map_flag){//有效
     		Robot.one_robot_go();
     		for(int i=0;i<Global.park_paixu.length;i++){
