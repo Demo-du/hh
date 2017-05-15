@@ -6,7 +6,8 @@ public class Floyd {
         for(int q=0;q<n;q++){  
             for(int w=0;w<n;w++){  
                 Dis[q][w]=G[q][w];  
-                Global.lujing[q][w]=Global.lujing[q][w]+String.valueOf(q)+" "+String.valueOf(w);
+              //  Global.lujing[q][w]=Global.lujing[q][w]+String.valueOf(q)+" "+String.valueOf(w);
+                Global.lujing[q][w]=String.valueOf(w);
             }  
         }  
               
@@ -15,11 +16,16 @@ public class Floyd {
                 for(int j=0; j < n; j++){  
                     if(Dis[i][j]>Dis[i][k]+Dis[k][j]){  
                         Dis[i][j]=Dis[i][k]+Dis[k][j];  
-                        Global.lujing[i][j]=Global.lujing[i][k]+" "+String.valueOf(j);
+                        Global.lujing[i][j]=Global.lujing[i][k]+" "+Global.lujing[k][j];
                     }  
                 }  
             }  
         }  
+        for(int k=0;k<n;k++){
+        	for(int i=0;i<n;i++){
+        		Global.lujing[k][i]=String.valueOf(k)+" "+Global.lujing[k][i];
+        	}
+        }
         return Dis;  
     }  
 }

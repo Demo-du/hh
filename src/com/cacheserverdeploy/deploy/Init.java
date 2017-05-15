@@ -37,6 +37,9 @@ public class Init {
     	}
     	Global.info_car=new int [Global.num_car][5];
     	String [][]info=new String [Global.num_car][5];
+    	Global.state_car=new int [Global.num_car];
+    	Global.in_time=new int [Global.num_car];
+    	Global.out_time=new int [Global.num_car];
     	int numcar=Global.num_car;
     	for(int i=0;i<numcar;i++){
     		info[i]=graphContent[i+2+width+1].split(" ");
@@ -159,7 +162,7 @@ public class Init {
     	int temp=0;
     	for(int i=0;i<num_p-1;i++){
     		for(int j=0;j<num_p-1;j++){
-    			if(Global.Dist[Global.I][Global.park_paixu[j]]>Global.Dist[Global.I][Global.park_paixu[j+1]]){  
+    			if(Global.Dist[Global.I][Global.park_paixu[j]]<Global.Dist[Global.I][Global.park_paixu[j+1]]){  
     	            temp=Global.park_paixu[j];  
     	            Global.park_paixu[j]=Global.park_paixu[j+1];  
     	            Global.park_paixu[j+1]=temp;  

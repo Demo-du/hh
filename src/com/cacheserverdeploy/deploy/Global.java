@@ -19,7 +19,7 @@ public class Global {
 	  public static int num_car;//汽车数
 	  public static int m;//质量
 	  public static int time_wait_max;//最大等待时间
-	  public static int time_wait_sum;//最大等待时间
+	  public static int time_wait_sum=0;//最大等待时间
 	  public static String[][] ditu;//地图
 	  public static int [][] graph;//无向图.列：i×列数+j
 	  public static int [][]info_car;//车辆信息//编号，申请进入，离开，最大等待，质量
@@ -35,5 +35,9 @@ public class Global {
 	  public static int time=0;//时间
 	  public static int [][] car_sesult;
 	  public static String [] result;
+	  public static int [] state_car;//0代表入库，1代表停车，2代表离开
+	  public static int [] in_time;
+	  public static int [] out_time;
 	  public static String solusion="";
+	  
 }
