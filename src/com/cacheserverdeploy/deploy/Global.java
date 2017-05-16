@@ -1,5 +1,20 @@
 package com.cacheserverdeploy.deploy;
-
+//┏┛┻━━━━━┛ ┻┓
+//┃　　　　　　    ┃
+//┃　　　━　　　   ┃
+//┃　┳┛　  ┗┳　 ┃
+//┃　　　　　　    ┃
+//┃　　　┻　　　   ┃
+//┃　　　　　　    ┃
+//┗━┓　　　 ┏━━━┛
+//  ┃　　　 ┃   神兽保佑
+//  ┃　　　 ┃   代码无BUG！
+//  ┃　　 　┗━━━━━━━━━┓
+//  ┃　　　　　　　        ┣┓
+//  ┃　　　　           ┏┛
+//  ┗━┓ ┓ ┏━━━┳ ┓ ┏━┛
+//    ┃ ┫ ┫   ┃ ┫ ┫
+//    ┗━┻━┛   ┗━┻━┛
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -17,7 +32,7 @@ public class Global {
 	  public static int w;//地图宽
 	  public static int h;//地图高
 	  public static int num_car;//汽车数
-	  public static int m;//质量
+	//  public static int m;//质量//不要用
 	  public static int time_wait_max;//最大等待时间
 	  public static int time_wait_sum=0;//最大等待时间
 	  public static String[][] ditu;//地图
@@ -39,5 +54,6 @@ public class Global {
 	  public static int [] in_time;
 	  public static int [] out_time;
 	  public static String solusion="";
+	  
 	  
 }

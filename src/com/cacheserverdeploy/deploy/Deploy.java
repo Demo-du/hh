@@ -32,7 +32,6 @@ public class Deploy
         /**do your work here**/
     	Init.data_init(graphContent);//初始化
     	String checkmap=Check.map_check();//判断地图是否有效
-    	String result="";//
     	if(Global.map_flag){//有效
     		//System.out.println(Global.lujing[22][11]);
     		//System.out.println(Global.Dist[22][11]);
@@ -49,7 +48,7 @@ public class Deploy
     //	System.out.println(Global.Dist[0][22]);
     	//System.out.println(Global.lujing[32][53]);
     //	System.out.println(checkmap);
-        return new String[]{checkmap,"\r\n","0 8 0 20"};
+        return new String[]{checkmap,Global.solusion};
     }
     
 }
