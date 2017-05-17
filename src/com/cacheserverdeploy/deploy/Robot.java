@@ -29,10 +29,11 @@ public class Robot {
     	//Global.solusion="1"+" "+String.valueOf(time_w)+" "+nenghao;
     /*	for(int i=0;i<Global.num_car;i++){
     		if(Global.time+Global.Dist[Global.I][Global.park_paixu[i]]>0){
-    			
+    			t190出发
     		}
     	}*/
     	int [] licheng=new int [Global.num_car];//每辆车的距离
+    	int [] licheng2=new int [Global.num_car];//每辆车的距离
     	int itor=0;
     	int it2=0;
     	int num_q=0;//放弃到数量
@@ -42,18 +43,27 @@ public class Robot {
     	for(int i=0;i<num;i++){
     		Global.state_car[i]=0;
     	}
+    	int in_zuihou=0;
     	while(n>0){//入库
     		n--;
     		if(Global.time>Global.info_car[itor][1]+Global.info_car[itor][3]||it2>Global.park_paixu.length-1){//放弃
     			Global.state_car[itor]=4;
     			num_q++;
     		}else{
-    			Global.in_time[itor]=Global.time;
+    			
     			if(Global.time<Global.info_car[itor][1])//入口等待
     				Global.time=Global.info_car[itor][1];
-    			Global.time_wait_sum+=Global.time-Global.info_car[itor][1];
+    			Global.in_time[itor]=Global.time;
+    			Global.time_wait_sum+=Global.in_time[itor]-Global.info_car[itor][1];
     			Global.time+=Global.Dist[Global.I][Global.park_paixu[it2]]*2;//更新时间
-    			licheng[itor]+=Global.Dist[Global.I][Global.park_paixu[it2]]*2;//更新每辆车里程
+    			if(n==0){//最后一辆车
+    				System.out.println("最后一辆");
+    				licheng[itor]+=Global.Dist[Global.I][Global.park_paixu[it2]];//停下后移动到第一个要移动到车位
+    				in_zuihou=Global.park_paixu[it2];
+    			}else{
+    				licheng[itor]+=Global.Dist[Global.I][Global.park_paixu[it2]];//更新每辆车里程
+    			}
+    			
     			it2++;
         		Global.state_car[itor]=1;//已经入库
     		}  		
@@ -64,9 +74,52 @@ public class Robot {
     		itor++;//更新迭代
     	}
     	System.out.println("stop"+Global.time);
-    	int weizhi=Global.I;//初始化位置为入口
+    	int weizhi=in_zuihou;//初始化位置为入口
     	int huancun=0;
-    	for(int i=0;i<num;i++){//遍历所有车
+    	//重写,第一辆车绝对会停
+    	if(Global.state_car[0]==1){
+    		//离开到第一辆车不是从起点出发//前面可能也要改2017.5.17
+    	//	licheng[0]=licheng[0]-Global.Dist[Global.I][Global.park_paixu[huancun]]+Global.Dist[Global.park_paixu[huancun+1]][Global.park_paixu[huancun]]+Global.Dist[Global.E][Global.park_paixu[huancun]];
+    		licheng[0]+=Global.Dist[Global.E][Global.park_paixu[huancun]];
+    		if(Global.time+Global.Dist[Global.E][Global.park_paixu[huancun]]+Global.Dist[Global.park_paixu[0]][Global.park_paixu[huancun]]-Global.info_car[0][2]>0){//判断是否到离开时间
+    			Global.time=Global.time+Global.Dist[Global.E][Global.park_paixu[huancun]]+Global.Dist[Global.I][Global.park_paixu[huancun]];
+    			Global.out_time[0]=Global.time-Global.Dist[Global.E][Global.park_paixu[huancun]];
+    			Global.time_wait_sum+=(Global.time-Global.info_car[0][2])*Global.b;
+    			System.out.println("dengdai"+Global.time_wait_sum);
+    		}else{
+    			Global.time=Global.info_car[0][2];//离开时间
+    			Global.out_time[0]=Global.time-Global.Dist[Global.E][Global.park_paixu[huancun]];
+    			
+    		}
+    		licheng2[0]+=Global.Dist[Global.I][Global.park_paixu[huancun]]+Global.Dist[Global.park_paixu[huancun]][Global.E];
+    		Global.result[0]=String.valueOf(0+1)+" "+"no"+" "+"0"+" "+String.valueOf(Global.in_time[0])+" "+code.jiema_lujing(Global.lujing[Global.I][Global.park_paixu[huancun]])
+ 		    +" "+"0"+" "+String.valueOf(Global.out_time[0])+" "+code.jiema_lujing(Global.lujing[Global.park_paixu[huancun]][Global.E]);		
+		    huancun++;
+    	}
+    	for(int i=1;i<num;i++){//遍历所有车
+    		if(Global.state_car[i]==1){
+    			
+    			licheng[i]+=Global.Dist[Global.E][Global.park_paixu[huancun]];
+        		if(Global.time+Global.Dist[Global.E][Global.park_paixu[huancun]]+Global.Dist[Global.E][Global.park_paixu[huancun]]-Global.info_car[i][2]>0){//判断是否到离开时间
+        			Global.time=Global.time+Global.Dist[Global.E][Global.park_paixu[huancun]]+Global.Dist[Global.E][Global.park_paixu[huancun]];
+        			Global.out_time[i]=Global.time-Global.Dist[Global.E][Global.park_paixu[huancun]];
+        			Global.time_wait_sum+=(Global.time-Global.info_car[i][2])*Global.b;
+        			System.out.println((Global.time-Global.info_car[i][2]));
+        			System.out.println("第二次"+Global.time_wait_sum);
+        		}else{
+        			Global.time=Global.info_car[i][2];//离开时间
+        			Global.out_time[i]=Global.time-Global.Dist[Global.E][Global.park_paixu[huancun]];
+        			
+        		}
+        		licheng2[i]+=Global.Dist[Global.I][Global.park_paixu[huancun]]+Global.Dist[Global.park_paixu[huancun]][Global.E];
+        		Global.result[i]=String.valueOf(i+1)+" "+"no"+" "+"0"+" "+String.valueOf(Global.in_time[i])+" "+code.jiema_lujing(Global.lujing[Global.I][Global.park_paixu[huancun]])
+     		    +" "+"0"+" "+String.valueOf(Global.out_time[i])+" "+code.jiema_lujing(Global.lujing[Global.park_paixu[huancun]][Global.E]);
+        		huancun++;
+        	}else{
+        		Global.result[i]=String.valueOf(i+1)+" "+"yes";
+        	}
+    	}
+    	/*for(int i=0;i<num;i++){//遍历所有车
     		//System.out.println(i+"时间"+Global.time);
     		if(Global.state_car[i]==1){
     		    Global.time+=Global.Dist[weizhi][Global.park_paixu[huancun]];
@@ -92,7 +145,7 @@ public class Robot {
     		}else{
     			Global.result[i]=String.valueOf(i+1)+" "+"yes";
     		}
-    	}
+    	}*/
     	int nenghao=0;
     	//int nenghao=Global.k*Global.m*Global.time;//能耗
     	Global.time_wait_sum+=num_q*Global.p;//加上罚时
