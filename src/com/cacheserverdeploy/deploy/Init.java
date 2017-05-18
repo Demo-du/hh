@@ -40,6 +40,8 @@ public class Init {
     	Global.state_car=new int [Global.num_car];
     	Global.in_time=new int [Global.num_car];
     	Global.out_time=new int [Global.num_car];
+    	Global.wait_per=new int [Global.num_car];
+    	Global.wait_per1=new int [Global.num_car][2];
     	int numcar=Global.num_car;
     	for(int i=0;i<numcar;i++){
     		info[i]=graphContent[i+2+width+1].split(" ");

@@ -54,6 +54,7 @@ public class Global {
 	  public static int [] in_time;
 	  public static int [] out_time;
 	  public static String solusion="";
-	  
+	  public static int[] wait_per;//每辆车等待时间
+	  public static int[][] wait_per1;//每辆车等待时间
 	  
 }
