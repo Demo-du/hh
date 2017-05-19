@@ -52,15 +52,15 @@ public class Robot {
     			num_q++;
     		}else{//正常入库
     			
-    			if(Global.time<=Global.info_car[itor][1]){//入口等待
+    			if(Global.time<Global.info_car[itor][1]){//入口等待
     				Global.time=Global.info_car[itor][1];
-    				if(itor!=0){
-    				 //  Global.wait_per[itor]=Global.wait_per[itor]-Global.b;
+    				if(Global.time<Global.info_car[itor][1]){
+    			//	   Global.wait_per[itor]=Global.wait_per[itor]-Global.b;
     				}
     			}
     			Global.in_time[itor]=Global.time;
     			Global.wait_per[itor]+=(Global.in_time[itor]-Global.info_car[itor][1]-1)*Global.b;
-    			Global.wait_per1[itor][0]+=(Global.in_time[itor]-Global.info_car[itor][1])*Global.b;
+    			Global.wait_per1[itor][0]+=(Global.in_time[itor]-Global.info_car[itor][1]-1)*Global.b;
     			Global.time_wait_sum+=(Global.in_time[itor]-Global.info_car[itor][1])*Global.b;
     			Global.time+=Global.Dist[Global.I][Global.park_paixu[it2]]*2;//更新时间
     			if(n==0){//最后一辆车
@@ -93,8 +93,8 @@ public class Robot {
     			Global.time=Global.time+Global.Dist[Global.E][Global.park_paixu[huancun]]+Global.Dist[Global.I][Global.park_paixu[huancun]];
     			Global.out_time[0]=Global.time-Global.Dist[Global.E][Global.park_paixu[huancun]];
     			Global.wait_per[0]+=(Global.time-Global.info_car[0][2]+1)*Global.b;
-    			Global.wait_per1[0][1]+=(Global.time-Global.info_car[0][2])*Global.b;
-    			Global.time_wait_sum+=(Global.time-Global.info_car[0][2])*Global.b;
+    			Global.wait_per1[0][1]+=(Global.time-Global.info_car[0][2]+1)*Global.b;
+    			Global.time_wait_sum+=(Global.out_time[0]+Global.Dist[Global.E][Global.park_paixu[huancun]]-Global.info_car[0][2])*Global.b;
     			System.out.println("dengdai"+Global.time_wait_sum);
     		}else{
     			//Global.wait_per[0]=Global.wait_per[0]+Global.b;
@@ -116,8 +116,8 @@ public class Robot {
         			Global.out_time[i]=Global.time-Global.Dist[Global.E][Global.park_paixu[huancun]];
         			System.out.println(i+"等待啊"+Global.time_wait_sum);
         			Global.wait_per[i]+=(Global.time-Global.info_car[i][2]+1)*Global.b;
-        			Global.wait_per1[i][1]+=(Global.time-Global.info_car[i][2])*Global.b;
-        			Global.time_wait_sum+=(Global.time-Global.info_car[i][2])*Global.b;
+        			Global.wait_per1[i][1]+=(Global.time-Global.info_car[i][2]+1)*Global.b;
+        			Global.time_wait_sum+=(Global.out_time[i]+Global.Dist[Global.E][Global.park_paixu[huancun]])*Global.b;
         			System.out.println((Global.time-Global.info_car[i][2]));
         			System.out.println("第二次"+Global.time_wait_sum);
         		}else{

@@ -23,6 +23,7 @@ public class Floyd {
         }  
         for(int k=0;k<n;k++){
         	for(int i=0;i<n;i++){
+        		//if(k!=Global.I)
         		Global.lujing[k][i]=String.valueOf(k)+" "+Global.lujing[k][i];
         	}
         }

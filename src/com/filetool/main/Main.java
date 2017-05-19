@@ -46,14 +46,14 @@ public class Main
 {
     public static void main(String[] args)
     {
-      /*  if (args.length != 2)
+      /*  if (args.length != 2
         {
             System.err.println("please input args: graphFilePath, resultFilePath");
             return;
         }*/
     	//String graphFilePath = args[0];
         //String resultFilePath = args[1];
-        String graphFilePath = "/home/dujianjian/haikang/1.txt";
+        String graphFilePath = "/home/dujianjian/haikang/2.txt";
         String resultFilePath = "/home/dujianjian/haikang/result.txt";
 
 
