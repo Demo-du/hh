@@ -40,27 +40,36 @@ public class Robot {
     	Global.time=0;
     	int num=Global.num_car;
     	int n=num;
+    	boolean []flag_1=new boolean[num];
+    	for(int i=0;i<num;i++){
+    		flag_1[i]=false;
+    	}
     	for(int i=0;i<num;i++){
     		Global.state_car[i]=0;
     	}
+    	//xiahcednale
     	int in_zuihou=0;
     	while(n>0){//入库
     		n--;
     		System.out.println("rukushijian"+Global.time);
-    		if((Global.time>Global.info_car[itor][1]+Global.info_car[itor][3])||it2>Global.park_paixu.length-1){//放弃
+    		if((Global.time>=Global.info_car[itor][1]+Global.info_car[itor][3])||it2>Global.park_paixu.length-1){//放弃
     			Global.state_car[itor]=4;
+    			
     			num_q++;
     		}else{//正常入库
     			
-    			if(Global.time<Global.info_car[itor][1]){//入口等待
+    			if(Global.time<=Global.info_car[itor][1]){//入口等待
     				Global.time=Global.info_car[itor][1];
     				if(Global.time<Global.info_car[itor][1]){
     			//	   Global.wait_per[itor]=Global.wait_per[itor]-Global.b;
     				}
     			}
     			Global.in_time[itor]=Global.time;
-    			Global.wait_per[itor]+=(Global.in_time[itor]-Global.info_car[itor][1]-1)*Global.b;
-    			Global.wait_per1[itor][0]+=(Global.in_time[itor]-Global.info_car[itor][1]-1)*Global.b;
+    			Global.wait_per[itor]+=(Global.in_time[itor]-Global.info_car[itor][1])*Global.b;
+    			Global.wait_per1[itor][0]+=(Global.in_time[itor]-Global.info_car[itor][1])*Global.b;
+    			if(Global.wait_per[itor]!=0){
+    				flag_1[itor]=true;
+    			}
     			Global.time_wait_sum+=(Global.in_time[itor]-Global.info_car[itor][1])*Global.b;
     			Global.time+=Global.Dist[Global.I][Global.park_paixu[it2]]*2;//更新时间
     			if(n==0){//最后一辆车
@@ -89,15 +98,22 @@ public class Robot {
     		//离开到第一辆车不是从起点出发//前面可能也要改2017.5.17
     	//	licheng[0]=licheng[0]-Global.Dist[Global.I][Global.park_paixu[huancun]]+Global.Dist[Global.park_paixu[huancun+1]][Global.park_paixu[huancun]]+Global.Dist[Global.E][Global.park_paixu[huancun]];
     		licheng[0]+=Global.Dist[Global.E][Global.park_paixu[huancun]];
-    		if(Global.time+Global.Dist[Global.E][Global.park_paixu[huancun]]+Global.Dist[Global.I][Global.park_paixu[huancun]]-Global.info_car[0][2]>0){//判断是否到离开时间
+    		if(Global.time+Global.Dist[Global.E][Global.park_paixu[huancun]]+Global.Dist[Global.I][Global.park_paixu[huancun]]-Global.info_car[0][2]>=0){//判断是否到离开时间
     			Global.time=Global.time+Global.Dist[Global.E][Global.park_paixu[huancun]]+Global.Dist[Global.I][Global.park_paixu[huancun]];
     			Global.out_time[0]=Global.time-Global.Dist[Global.E][Global.park_paixu[huancun]];
-    			Global.wait_per[0]+=(Global.time-Global.info_car[0][2]+1)*Global.b;
-    			Global.wait_per1[0][1]+=(Global.time-Global.info_car[0][2]+1)*Global.b;
+    			Global.wait_per[0]+=(Global.time-Global.info_car[0][2])*Global.b;
+    			Global.wait_per1[0][1]+=(Global.time-Global.info_car[0][2])*Global.b;
+    			if(Global.wait_per1[0][1]==0&&flag_1[0]){
+    				Global.wait_per[0]=Global.wait_per[0]-Global.b;
+    			}
     			Global.time_wait_sum+=(Global.out_time[0]+Global.Dist[Global.E][Global.park_paixu[huancun]]-Global.info_car[0][2])*Global.b;
     			System.out.println("dengdai"+Global.time_wait_sum);
     		}else{
     			//Global.wait_per[0]=Global.wait_per[0]+Global.b;
+    			if(flag_1[0]){
+    				//System.out.println("标志是"+i);
+    				Global.wait_per[0]=Global.wait_per[0]-Global.b;
+    			}
     			Global.time=Global.info_car[0][2];//离开时间
     			Global.out_time[0]=Global.time-Global.Dist[Global.E][Global.park_paixu[huancun]];
     			
@@ -111,17 +127,25 @@ public class Robot {
     		if(Global.state_car[i]==1){
     			
     			licheng[i]+=Global.Dist[Global.E][Global.park_paixu[huancun]];
-        		if(Global.time+Global.Dist[Global.E][Global.park_paixu[huancun]]+Global.Dist[Global.E][Global.park_paixu[huancun]]-Global.info_car[i][2]>0){//判断是否到离开时间
+        		if(Global.time+Global.Dist[Global.E][Global.park_paixu[huancun]]+Global.Dist[Global.E][Global.park_paixu[huancun]]-Global.info_car[i][2]>=0){//判断是否到离开时间
         			Global.time=Global.time+Global.Dist[Global.E][Global.park_paixu[huancun]]+Global.Dist[Global.E][Global.park_paixu[huancun]];
         			Global.out_time[i]=Global.time-Global.Dist[Global.E][Global.park_paixu[huancun]];
         			System.out.println(i+"等待啊"+Global.time_wait_sum);
-        			Global.wait_per[i]+=(Global.time-Global.info_car[i][2]+1)*Global.b;
-        			Global.wait_per1[i][1]+=(Global.time-Global.info_car[i][2]+1)*Global.b;
+        			Global.wait_per[i]+=(Global.time-Global.info_car[i][2])*Global.b;
+        			Global.wait_per1[i][1]+=(Global.time-Global.info_car[i][2])*Global.b;
+        			if(Global.wait_per1[i][1]==0&&flag_1[i]){
+        				System.out.println("标志是"+i);
+        				Global.wait_per[i]=Global.wait_per[i]-Global.b;
+        			}
         			Global.time_wait_sum+=(Global.out_time[i]+Global.Dist[Global.E][Global.park_paixu[huancun]])*Global.b;
         			System.out.println((Global.time-Global.info_car[i][2]));
         			System.out.println("第二次"+Global.time_wait_sum);
         		}else{
-        			Global.wait_per[i]=Global.wait_per[i]+Global.b;
+        			//Global.wait_per[i]=Global.wait_per[i]+Global.b;
+        			if(flag_1[i]){
+        				//System.out.println("标志是"+i);
+        				Global.wait_per[i]=Global.wait_per[i]-Global.b;
+        			}
         			Global.time=Global.info_car[i][2];//离开时间
         			Global.out_time[i]=Global.time-Global.Dist[Global.E][Global.park_paixu[huancun]];
         			
@@ -188,5 +212,6 @@ public class Robot {
     		System.out.println("第"+i+"等待时间为"+Global.wait_per[i]);
     		System.out.println("第"+i+"等待时间为"+Global.wait_per1[i][0]);
     	}
+    	System.out.println("标志"+flag_1[2]);
     }
 }
