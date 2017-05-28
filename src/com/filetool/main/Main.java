@@ -53,7 +53,7 @@ public class Main
         }*/
     	//String graphFilePath = args[0];
         //String resultFilePath = args[1];
-        String graphFilePath = "/home/dujianjian/haikang/5.txt";
+        String graphFilePath = "/home/dujianjian/haikang/6.txt";
         String resultFilePath = "/home/dujianjian/haikang/result.txt";
 
 

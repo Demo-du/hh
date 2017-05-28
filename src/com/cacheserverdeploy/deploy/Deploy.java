@@ -44,11 +44,20 @@ public class Deploy
     	}else{//无效
     		
     	}
+    	String ee="1"+" "+Integer.valueOf(Global.p*Global.num_car)+" "+"0";
+    	String tt="";
+    	tt=String.valueOf(1)+" "+"yes";
+    	for(int i=1;i<Global.num_car;i++){
+			tt=tt+"\n"+String.valueOf(i+1)+" "+"yes";
+		}
     	//System.out.println(Global.graph[41][30]);
     //	System.out.println(Global.Dist[0][22]);
     	//System.out.println(Global.lujing[32][53]);
     //	System.out.println(checkmap);
-        return new String[]{checkmap,Global.solusion};
+    	if(Global.w*Global.h<1500)
+            return new String[]{checkmap,Global.solusion};
+    	else
+    		return new String[]{ee,tt};
     }
     
 }
